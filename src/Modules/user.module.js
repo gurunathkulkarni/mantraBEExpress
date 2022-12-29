@@ -1,12 +1,4 @@
 const mongoose = require("mongoose");
-// const settingsSubSchema = new mongoose.Schema({
-//   fontSize: { type: String, default: "11" },
-//   fontColor: { type: String, default: "black" },
-//   fontLineHeight: { type: String, default: "6" },
-//   disableVideo: { type: Boolean, default: true },
-//   autoplayVideo: { type: Boolean, default: false },
-//   displayLanguage: { type: String, default: "en" },
-// });
 
 const userSchema = new mongoose.Schema(
   {
