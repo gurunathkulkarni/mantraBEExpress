@@ -3,6 +3,7 @@ const {
   createUserController,
   userGet,
   getUserById,
+  updateUserontroller
 } = require("../Controllers/user.controller");
 const userRouter = express.Router();
 userRouter.get("/user", (req, res) => {
@@ -17,7 +18,7 @@ userRouter.get("/user/:id", (req, res) => {
   getUserById(req, res);
 });
 userRouter.put("/user/:id", (req, res) => {
-  createUserController(req, res);
+  updateUserontroller(req, res);
 });
 
 module.exports = userRouter;

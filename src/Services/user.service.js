@@ -29,6 +29,24 @@ exports.getById = async (id) => {
     return err;
   }
 };
-const updateUser = async (req, res) => {};
+exports.updateUserService = async (req) => {
+try{
+  console.log("before update",req);
+  const { id, name,phoneNUmber,gender,password,userType,settings} = req;
+
+    const existedUser= await userModel.findById(id);
+    if (!existedUser) {
+        return { message: 'User not found' };
+    }
+    const updatedUser = await userModel.updateOne({_id:id}, {name,phoneNUmber,gender,password,userType,settings});
+    console.log("after update",updatedUser);
+    return updatedUser;
+}catch(err){
+  console.log("before  catch",err);
+
+return err
+}
+
+};
 
 const deleteUser = async (req, res) => {};

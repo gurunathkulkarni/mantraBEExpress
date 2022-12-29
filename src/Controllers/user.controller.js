@@ -1,10 +1,10 @@
-const { createUser, userGet, getById } = require("../Services/user.service");
+const { createUser, userGet, getById, updateUserService} = require("../Services/user.service");
+const { sendResponse } = require("../utils/helper");
 exports.userGet = async (req, res) => {
   try {
     const userData = await userGet();
     res.send(userData);
   } catch (err) {
-    console.log("COntroller", err);
     res.send({ error: err });
   }
 };
@@ -27,13 +27,24 @@ exports.getUserById = async (req, res) => {
     return res.send({ error: err });
   }
 };
-exports.updateUser = async (req, res) => {
+
+exports.updateUserontroller = async (req, res) => {
   try {
-    const { id } = req.params;
-    const updateUserById = await getUserById(id);
+      const { id } = req.params;
+      const { name,phoneNUmber,gender,password,userType,settings } = req.body;
+      console.log("update",req.body);
+      const updatedUser = await updateUserService({id, name,phoneNUmber,gender,password,userType,settings});
+      if(updatedUser.modifiedCount >0){
+        return sendResponse(res, 200, "updated successfully", updatedUser);
+      }else{
+    return sendResponse(res, 500, '', {} ,updatedUser);
+
+      }
   } catch (err) {
-    return res.send({ error: err });
+    return sendResponse(res, 500, '', {} ,err);
   }
-};
+}
+    
+
 
 const deleteUser = async (req, res) => {};
