@@ -7,13 +7,15 @@ exports.getLanguageController = async (req, res) => {
         sendResponse(res, 200, "data fetched", data);
     } catch (err) {
         return sendResponse(res, 500, "data fetched failed", {}, err);
-    }   
+    }  
     
 }
 
 exports.createLanguageController = async (req, res) => {
-    const { languageCode, displayLanguage } = req.body;
-    const createdLanaguge = await createLanguageService(languageCode, displayLanguage);
+    const { langCode, displayLang } = req.body;
+    console.log('languageCode', langCode);
+    console.log('displayLanguage', displayLang);
+    const createdLanaguge = await createLanguageService(langCode, displayLang);
     if (!createdLanaguge) return sendResponse(res, 400, 'failed to add', {}, createdLanaguge);
     sendResponse(res, 200, "created successfully", createdLanaguge);
 }
@@ -35,12 +37,16 @@ exports.getLanguageById = async (req, res) => {
 
 exports.updateLanguageController = async (req, res) => {
     try {
-        const { id } = re.params;
+        const { id } = req.params;
         const { languageCode, displayLanguage, isActive } = req.body;
         const updatedLang = await updateLanguageService({id, languageCode, displayLanguage, isActive});
-        return sendResponse(res, 200, "updated successfully", updatedLang);
-        cons
+        if (updatedLang.modifiedCount > 0) {
+            return sendResponse(res, 200, "updated successfully");
+        } else {
+            return sendResponse(res, 200, "updated failed");
+        }
     } catch (err) {
-
+        console.log('error', err);
+        return sendResponse(res, 500, 'Error', {}, err);
     }
 }

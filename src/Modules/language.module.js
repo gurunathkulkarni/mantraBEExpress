@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const languageSchema = new mongoose.Schema(
   {
-    langaugeCode: { type: String, require: true, default: "HI" },
-    displayLangauge: { type: String, require: true, default: "Hindi" },
-    isActive: { type: Boolean, require: true, default: true },
+    langCode: { type: String, require: true, unique: true},
+    displayLang: { type: String, require: true, unique: true},
+    isActive: { type: Boolean, require: true},
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
