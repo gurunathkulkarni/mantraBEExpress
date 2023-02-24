@@ -78,17 +78,14 @@ exports.addDetailsToSubCategory = async (categoryId, reqObj) => {
     if (!details) {
       return { message: "Please pass the string" };
     }
-    existingCategory.sub_category.length &&
-      existingCategory.sub_category.map((item) => {
-        if (id.includes(item.id)) {
-          item.details = details;
-        }
-      });
-    console.log('coming first', existingCategory);
-    const response = await existingCategory.save();
-    console.log('coming', response);
-    return existingCategory;
+    await categoryModel.updateOne(
+      { "sub_category._id": id },
+      { $set: { "sub_category.$.details": details } }
+    );
+    const response = await categoryModel.findOne({ _id: categoryId });
+    return response;
   } catch (err) {
+    console.log("error", err);
     return err;
   }
 };
