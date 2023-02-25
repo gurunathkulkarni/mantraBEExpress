@@ -26,10 +26,22 @@ exports.updateLanguageService = async (req) => {
         if (!existedLang) {
             return { message: 'Langauge not found' };
         }
-        const updatedLang = await LangaugeModel.updateOne({_id: id}, {displayLangauge, langaugeCode, isActive});
-        return updatedLang;
+        if (displayLangauge) existedLang.displayLang = displayLangauge;
+        if (langaugeCode) existedLang.langCode = langaugeCode;
+        return { message: 'success', status: true };
+        // const updatedLang = await LangaugeModel.updateOne({_id: id}, {displayLangauge, langaugeCode, isActive});
+        // return updatedLang;
     } catch (err) {
-        return err;
+        return { message: 'failed', status: false };
     }
   
+}
+
+exports.deleteLangService = async (id) => {
+    try {
+        await LangaugeModel.deleteOne({_id: id});
+        return { message: 'success', status: true };
+    } catch (err) {
+        return { message: 'success failed', status: false };
+    }
 }

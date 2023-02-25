@@ -6,6 +6,9 @@ const {
   createSubCategoryController,
   editSubCategoryController,
   addSubCategoryDetails,
+  editCategory,
+  deleteCategory,
+  deleteSubCategoryController,
 } = require("../Controllers/category.controller");
 const { createCategorySchema } = require("../Schema/category.schema");
 
@@ -27,12 +30,24 @@ CategoryRouter.get("/category/:lang_id", (req, res) => {
   getCategoryController(req, res);
 });
 
+CategoryRouter.put('/category/:id', (req, res) => {
+  editCategory(req, res);
+});
+
+CategoryRouter.delete('/category/:id', (req,res) => {
+  deleteCategory(req, res);
+});
+
 CategoryRouter.post("/category/:categoryId/subCategory", (req, res) => {
   createSubCategoryController(req, res);
 });
 
 CategoryRouter.put("/category/:categoryId/subCategory", (req, res) => {
   editSubCategoryController(req, res);
+});
+
+CategoryRouter.delete('/category/:categoryId/subCategory/:id', (req,res) => {
+  deleteSubCategoryController(req, res);
 });
 
 CategoryRouter.put("/category/:categoryId/subCategory/details", (req, res) => {

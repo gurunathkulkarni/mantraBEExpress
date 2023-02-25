@@ -1,4 +1,4 @@
-const { getAllLanguage, createLanguageService, updateLanguageService } = require("../Services/Language.service");
+const { getAllLanguage, createLanguageService, updateLanguageService, deleteLangService } = require("../Services/Language.service");
 const { sendResponse } = require("../utils/helper");
 
 exports.getLanguageController = async (req, res) => {
@@ -35,16 +35,22 @@ exports.getLanguageById = async (req, res) => {
 
 }
 
+exports.deleteLangControler = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedLanguage = await deleteLangService(id);
+        res.send(deletedLanguage);
+    } catch (err) {
+        sendResponse(res, 500, 'error', {}, err);
+    }
+}
+
 exports.updateLanguageController = async (req, res) => {
     try {
         const { id } = req.params;
         const { languageCode, displayLanguage, isActive } = req.body;
         const updatedLang = await updateLanguageService({id, languageCode, displayLanguage, isActive});
-        if (updatedLang.modifiedCount > 0) {
-            return sendResponse(res, 200, "updated successfully");
-        } else {
-            return sendResponse(res, 200, "updated failed");
-        }
+        res.send(updatedLang);
     } catch (err) {
         console.log('error', err);
         return sendResponse(res, 500, 'Error', {}, err);

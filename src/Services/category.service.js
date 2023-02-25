@@ -10,6 +10,31 @@ exports.createCategoryService = async (reqObj) => {
   }
 };
 
+exports.updateCategory = async (id, reqObj) => {
+  try {
+    const { categoryName, categoryTitle, day, imageUrl } = reqObj;
+    const existingCategory = await categoryModel.findById(id);
+    if (!existingCategory) return { message: 'category not found', status: false }
+    if (categoryName) existingCategory.categoryName = categoryName;
+    if (categoryTitle) existingCategory.categoryTitle = categoryTitle;
+    if (day) existingCategory.day = day;
+    if (imageUrl) existingCategory.imageUrl = imageUrl;
+    await existingCategory.save();
+    return { message: 'updated successfully', data: existingCategory };
+  } catch (err) {
+    return err;
+  }
+}
+
+exports.deleteCategoryService = async (id) => {
+  try {
+    await categoryModel.deleteOne({ _id: id });
+    return { message: 'success', status: true };
+  } catch(err) {
+    return { message: 'success failed', status: false };
+  }
+}
+
 exports.getCategoryService = async (lang_id) => {
   try {
     console.log("lang_id", lang_id);
@@ -20,7 +45,6 @@ exports.getCategoryService = async (lang_id) => {
   }
 };
 
-exports.editCategory = async () => {};
 
 exports.createSubCategoryService = async (req) => {
   try {
@@ -43,6 +67,21 @@ exports.createSubCategoryService = async (req) => {
     return err;
   }
 };
+
+exports.deleteSubCategoryService = async (categoryId, id) => {
+  try {
+    await categoryModel.update({_id: categoryId}, {
+      $pull: {
+        sub_category: {
+          _id: id
+        }
+      }
+    });
+    return { message: 'deleted successfully', status: true };
+  } catch(err) {
+    return { message: 'deleted failed', status: false };
+  }
+}
 
 exports.editSubCategory = async (categoryId, reqObj) => {
   try {
@@ -75,6 +114,7 @@ exports.addDetailsToSubCategory = async (categoryId, reqObj) => {
     if (!existingCategory) {
       return { message: "category not exisit" };
     }
+    console.log('details', reqObj);
     if (!details) {
       return { message: "Please pass the string" };
     }

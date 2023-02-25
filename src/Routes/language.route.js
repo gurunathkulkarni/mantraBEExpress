@@ -5,6 +5,7 @@ const {
   createLanguageController,
   getLanguageById,
   updateLanguageController,
+  deleteLangControler,
 } = require("../Controllers/Langauge.controller");
 const {
   postLanguageSchema,
@@ -48,5 +49,9 @@ LanguageRouter.put(
     updateLanguageController(req, res);
   }
 );
+
+LanguageRouter.delete('/language/:id', (req, res) => {
+  deleteLangControler(req, res);
+})
 
 module.exports = LanguageRouter;
