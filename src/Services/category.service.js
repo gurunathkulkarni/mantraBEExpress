@@ -90,18 +90,28 @@ exports.editSubCategory = async (categoryId, reqObj) => {
     if (!existingCategory) {
       return { message: "category not exisit" };
     }
-    existingCategory.sub_category.length &&
-      existingCategory.sub_category.map((item) => {
-        if (id === item.id) {
-          if (reqObj.sub_category_name)
-            item.sub_category_name = reqObj.sub_category_name;
-          if (reqObj.sub_category_title)
-            item.sub_category_title = reqObj.sub_category_title;
-          if (reqObj.isActive) item.isActive = reqObj.isActive;
-        }
-      });
-    existingCategory.save();
-    return existingCategory;
+
+    await categoryModel.updateOne(
+      { "sub_category._id": id },
+      { $set: { "sub_category.$.sub_category_name": reqObj.sub_category_name,
+       "sub_category.$.sub_category_title": reqObj.sub_category_title } }
+    );
+    
+    // existingCategory.sub_category.length &&
+    //   // existingCategory.sub_category.map((item) => {
+    //   //   console.log('id', id, item._id);
+    //   //   if (id === item._id) {
+    //   //     if (reqObj.sub_category_name)
+    //   //       item.sub_category_name = reqObj.sub_category_name;
+    //   //     if (reqObj.sub_category_title)
+    //   //       item.sub_category_title = reqObj.sub_category_title;
+    //   //     if (reqObj.isActive) item.isActive = reqObj.isActive;
+    //   //   }
+    //   // });
+    // existingCategory.save();
+    // return existingCategory;
+    const response = await categoryModel.findOne({ _id: categoryId });
+    return response;
   } catch (err) {
     return err;
   }
@@ -115,9 +125,9 @@ exports.addDetailsToSubCategory = async (categoryId, reqObj) => {
       return { message: "category not exisit" };
     }
     console.log('details', reqObj);
-    if (!details) {
-      return { message: "Please pass the string" };
-    }
+    // if (!details) {
+    //   return { message: "Please pass the string" };
+    // }
     await categoryModel.updateOne(
       { "sub_category._id": id },
       { $set: { "sub_category.$.details": details } }

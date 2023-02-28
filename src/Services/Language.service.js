@@ -21,16 +21,18 @@ exports.createLanguageService = async (langCode, displayLang) => {
 
 exports.updateLanguageService = async (req) => {
     try {
-        const { id, displayLangauge, langaugeCode, isActive} = req;
+        const { id, displayLangauge, langaugeCode, isActive = true} = req;
+        console.log('is', isActive);
         const existedLang = await LangaugeModel.findById(id);
         if (!existedLang) {
             return { message: 'Langauge not found' };
         }
         if (displayLangauge) existedLang.displayLang = displayLangauge;
         if (langaugeCode) existedLang.langCode = langaugeCode;
+        existedLang.isActive = isActive;
+        console.log('existedLang', existedLang);
+        await existedLang.save();
         return { message: 'success', status: true };
-        // const updatedLang = await LangaugeModel.updateOne({_id: id}, {displayLangauge, langaugeCode, isActive});
-        // return updatedLang;
     } catch (err) {
         return { message: 'failed', status: false };
     }

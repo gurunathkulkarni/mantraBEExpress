@@ -4,7 +4,7 @@ const languageSchema = new mongoose.Schema(
   {
     langCode: { type: String, require: true, unique: true},
     displayLang: { type: String, require: true, unique: true},
-    isActive: { type: Boolean, require: true},
+    isActive: { type: Boolean, require: true, default: true},
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
