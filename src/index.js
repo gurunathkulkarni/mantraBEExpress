@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 connect();
 
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '5mb'}));
 app.use(cors({
   origin: '*'
 }));
