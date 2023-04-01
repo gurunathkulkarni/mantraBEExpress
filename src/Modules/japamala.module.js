@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const japamalaSchema = new mongoose.Schema(
     {
-      langCode: { type: String, require: true, unique: true},
-      displayLang: { type: String, require: true, unique: true},
+      user_id: { type: String, require: true, unique: true},
+      name: { type: String, require: true, unique: true},
       isActive: { type: Boolean, require: true},
     },
     {

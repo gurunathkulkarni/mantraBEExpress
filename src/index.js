@@ -7,6 +7,7 @@ const userRouter = require("./Routes/user.route");
 const connect = require("./DB/index");
 const LanguageRouter = require("./Routes/language.route");
 const CategoryRouter = require("./Routes/category.route");
+const panchangRouter = require("./Routes/basicpanchang.route");
 
 
 app.get("/", (req, res) => {
@@ -22,6 +23,7 @@ app.use(cors({
 app.use(userRouter);
 app.use(LanguageRouter);
 app.use(CategoryRouter);
+app.use(panchangRouter)
 
 
 app.listen(port, () => {
