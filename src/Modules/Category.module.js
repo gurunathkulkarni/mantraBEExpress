@@ -6,7 +6,7 @@ const categorySchema = new mongoose.Schema(
     categoryTitle: { type: String, require: true },
     lang_id: { type: mongoose.Schema.Types.ObjectId, ref: "Language", require: true },
     isActive: { type: Boolean, require: true, default: true },
-    imageUrl: { type: String, require: false },
+    imageUrl: { type: Buffer, require: false },
     day: { type: String, require: false },
     sub_category: [
       {
