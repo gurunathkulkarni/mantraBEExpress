@@ -77,12 +77,12 @@ exports.storePanchangByApi = async (req, res) => {
         const header = {
           "Content-Type": "application/json",
           Authorization:
-            "Basic NjIxOjA2YzY1Y2Q1ZDJlNmY3MTJmNzhlYWRlYzA3ZDRhNjFh.",
+            "Basic NjMzOmZlNmY1YTM2NzIyNzE4NjdhYzRlMTJkZDk2ZTllZTI4",
         };
 
         console.log("raw", raw);
         const response = await axios.post(
-          "https://json.apireports.com/v1/basic_panchang",
+          "https://json.apireports.com/v1/astro_details",
           raw,
           { headers: header }
         );
@@ -105,6 +105,7 @@ exports.storePanchangByApi = async (req, res) => {
           moduleObj.year = jsonParse.year;
           moduleObj.hour = jsonParse.hour;
           moduleObj.min = jsonParse.min;
+          moduleObj.date = `${jsonParse.day}_${jsonParse.month}_${jsonParse.year}`;
           const data = await createBasicPanchang(moduleObj);
           resultArray.push({ data });
         }

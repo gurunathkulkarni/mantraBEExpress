@@ -1,9 +1,31 @@
 const categoryModel = require("../Modules/Category.module");
 const crypto = require("crypto");
 
+exports.getSubCategoryByLangIdAndCategory = async (langId, categoryId, subCategoryid) => {
+  try {
+    console.log('coming', subCategoryid);
+    const getCategoryForLang = await categoryModel.find({ 'sub_category._id': { subCategoryid} });
+    console.log('getCategoryForLang', getCategoryForLang)
+    // if (!getCategoryForLang) return { status: 201, message: 'Category not found' };
+    // if (getCategoryForLang.length <= 0)  return { status: 201, message: 'Category not found' };
+    // if (getCategoryForLang && getCategoryForLang[0].sub_category && getCategoryForLang[0].sub_category.length) {
+    //   const data = getCategoryForLang[0].sub_category.filter((item)=> item._id)
+    // } else {
+    //   return { status: 201, message: 'sub Category not found' };
+    // }
+    // const getCategory = await getCategoryForLang.find({_id: categoryId});
+    // console.log('getCategory', getCategory);
+  } catch (err) {
+    console.log('err', err);
+    return err;
+  }
+}
+
 exports.createCategoryService = async (reqObj) => {
   try {
+    console.log('coming', reqObj);
     const createdCategory = await categoryModel.create(reqObj);
+    console.log('coming', createdCategory);
     return createdCategory;
   } catch (err) {
     return err;
@@ -37,8 +59,7 @@ exports.deleteCategoryService = async (id) => {
 
 exports.getCategoryService = async (lang_id) => {
   try {
-    console.log("lang_id", lang_id);
-    const getCategory = await categoryModel.find({ lang_id: lang_id });
+    let getCategory = await categoryModel.find({ lang_id: lang_id, isActive: true });
     return getCategory;
   } catch (err) {
     return err;

@@ -9,6 +9,7 @@ const {
   editCategory,
   deleteCategory,
   deleteSubCategoryController,
+  getSubCategoryByLangIdAndCategoryController,
 } = require("../Controllers/category.controller");
 const { createCategorySchema } = require("../Schema/category.schema");
 
@@ -28,6 +29,9 @@ CategoryRouter.post(
 
 CategoryRouter.get("/category/:lang_id", (req, res) => {
   getCategoryController(req, res);
+});
+CategoryRouter.get("/category/:lang_id/:categoryId/:subCategoryid", (req, res) => {
+  getSubCategoryByLangIdAndCategoryController(req, res);
 });
 
 CategoryRouter.put('/category/:id', (req, res) => {

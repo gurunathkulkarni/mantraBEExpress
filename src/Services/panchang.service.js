@@ -18,7 +18,9 @@ exports.getBasicPanchangService = async (dateObj) => {
       'month': '11', 
       'year': '2023'
     };
-    const getData = await basicpanchangModel.findOne({day:dateObj.day,month:dateObj.month,year: dateObj.year});
+    const date = `${dateObj.day}_${dateObj.month}_${dateObj.year}`;
+    console.log("coming", date);
+    const getData = await basicpanchangModel.find({date});
     console.log("getData", getData);
     return getData;
   } catch (err) {

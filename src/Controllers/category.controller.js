@@ -1,4 +1,4 @@
-const { createCategoryService, getCategoryService, createSubCategoryService, editSubCategory, addDetailsToSubCategory, updateCategory, deleteCategoryService, deleteSubCategoryService } = require("../Services/category.service");
+const { createCategoryService, getCategoryService, createSubCategoryService, editSubCategory, addDetailsToSubCategory, updateCategory, deleteCategoryService, deleteSubCategoryService, getSubCategoryByLangIdAndCategory } = require("../Services/category.service");
 const { sendResponse } = require("../utils/helper");
 
 exports.createCategoryController = async (req, res) => {
@@ -18,6 +18,16 @@ exports.getCategoryController = async (req, res) => {
     const { lang_id } = req.params;
     const getCategory = await getCategoryService(lang_id);
     sendResponse(res, 200, "", getCategory);
+  } catch(err) {
+    sendResponse(res, 500, "", {},err);
+  }
+}
+
+exports.getSubCategoryByLangIdAndCategoryController= async (req,res) => {
+  try {
+    const { lang_id, categoryId, subCategoryid} = req.params;
+    const getData = await getSubCategoryByLangIdAndCategory(lang_id, categoryId, subCategoryid);
+    sendResponse(res, 200, "", getData);
   } catch(err) {
     sendResponse(res, 500, "", {},err);
   }
