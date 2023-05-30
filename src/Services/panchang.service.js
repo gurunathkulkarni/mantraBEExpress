@@ -1,4 +1,5 @@
 const basicpanchangModel = require("../Modules/basic_panchang.module");
+const basicpanchangModel1 = require("../Modules/basic_panchang_1.module");
 
 exports.createBasicPanchang = async (reqObj) => {
   try {
@@ -10,18 +11,42 @@ exports.createBasicPanchang = async (reqObj) => {
   }
 };
 
+exports.createBasicePanchang1 = async (reqObj) => {
+  try {
+    const createdBasicPanhang = await basicpanchangModel1.create(reqObj);
+    return createdBasicPanhang;
+  } catch (err) {
+    console.log("err", err);
+    return err;
+  }
+}
+
 exports.getBasicPanchangService = async (dateObj) => {
   try {
-    console.log("date", dateObj);
-    const filter = {
-      'day': '03', 
-      'month': '11', 
-      'year': '2023'
-    };
     const date = `${dateObj.day}_${dateObj.month}_${dateObj.year}`;
-    console.log("coming", date);
     const getData = await basicpanchangModel.find({date});
-    console.log("getData", getData);
+    return getData;
+  } catch (err) {
+    console.log("err", err);
+    return err;
+  }
+};
+
+exports.getBasicPanchangService1 = async (dateObj) => {
+  try {
+    const date = `${dateObj.day}_${dateObj.month}_${dateObj.year}`;
+    const getData = await basicpanchangModel1.find({date});
+    return getData;
+  } catch (err) {
+    console.log("err", err);
+    return err;
+  }
+};
+
+exports.getSunTimeService = async (dateObj) => {
+  try {
+    const date = `${dateObj.day}_${dateObj.month}_${dateObj.year}`;
+    const getData = await basicpanchangModel1.find({date}).select(["sunrise", "sunset"]);
     return getData;
   } catch (err) {
     console.log("err", err);
